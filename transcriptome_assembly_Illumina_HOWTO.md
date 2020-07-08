@@ -10,7 +10,7 @@ See the [general Compute Canada wiki](https://docs.computecanada.ca/wiki/Compute
 
     #!/bin/bash
     #SBATCH --time=00:20:00
-    #SBATCH --account=def-keeling
+    #SBATCH --account=def-PI
     #SBATCH --mem-per-cpu=2000M
     module load fastqc
 
@@ -22,7 +22,7 @@ See the [general Compute Canada wiki](https://docs.computecanada.ca/wiki/Compute
 
     #!/bin/bash
     #SBATCH --time=12:00:00
-    #SBATCH --account=def-keeling
+    #SBATCH --account=def-PI
     #SBATCH --mem-per-cpu=16000M
     #SBATCH --cpus-per-task=8
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -44,7 +44,7 @@ See the [general Compute Canada wiki](https://docs.computecanada.ca/wiki/Compute
 ###### Running trimmomatic:
     #!/bin/bash
     #SBATCH --time=16:00:00
-    #SBATCH --account=def-keeling
+    #SBATCH --account=def-PI
     #SBATCH --mem-per-cpu=4000M
     #SBATCH --cpus-per-task=8
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -64,7 +64,7 @@ Assembly using [rnaSPAdes](http://cab.spbu.ru/software/rnaspades/) (Bushmanova e
 
     #!/bin/bash
     #SBATCH --time=48:00:00
-    #SBATCH --account=def-keeling
+    #SBATCH --account=def-PI
     #SBATCH --mem-per-cpu=250000M
     #SBATCH --cpus-per-task=12
     #SBATCH --mail-user=YOUREMAIL@BLA.COM
