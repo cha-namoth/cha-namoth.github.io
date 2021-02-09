@@ -57,8 +57,7 @@ Run first, then blastx overnight. Megablast vs nt: Megablast is optimized for hi
 	-max_target_seqs 5 > Trinity_vs_nt.blastn
 
 #### Step 2: Run diamond blastx against uniprot reference proteomes
-uniprot db was converted for diamond by Filip, the taxids file was provided by Filip as well and can be found under `/scratch/uniprot/`.
-Note that diamond blastx is VERY SLOW – run overnight with 24 threads.
+Note that diamond blastx is VERY SLOW – run overnight, possibly with more than 8 threads.
 
 Diamond blastx:
 
