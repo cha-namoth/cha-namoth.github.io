@@ -57,7 +57,8 @@ Run first, then blastx overnight. Megablast vs nt: Megablast is optimized for hi
 	-max_target_seqs 5 > Trinity_vs_nt.blastn
 
 #### Step 2: Run diamond blastx against uniprot reference proteomes
-Note that diamond blastx is VERY SLOW – run overnight, possibly with more than 8 threads.
+uniprot db was converted for diamond by Filip, the taxids file was provided by Filip as well and can be found under `/scratch/uniprot/`.
+Note that diamond blastx is VERY SLOW – run overnight with 24 threads.
 
 Diamond blastx:
 
@@ -78,17 +79,26 @@ Taxify diamond results (this currently doesn't work in blobtoolsv2 – working o
 *TODO: Taxify UniProt database with NCBI taxdump: https://blobtoolkit.genomehubs.org/install/#databases*
 
 #### Step 3: Map trimmed reads to the assembly
-Mapping is used to assess the coverage of reads on contigs.
+Mapping is used to assess the coverage of reads on contigs. You can do this either with bowtie2 or minimap2 (the latter is much faster, but less accurate? If you have Nanopore or PacBio reads you'll need to use minimap2).
 
 Index the contigs for Bowtie2:
 
-	bowtie2-build Trinity.fasta Trinity.fasta
+	bowtie2-build assembly.fasta assembly.fasta
 
 bowtie2 mapping of merged reads (slow, run on as many threads as possible with -p):
 
-	bowtie2 -x Trinity.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
+	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
-*TODO: Add mapping via minimap2 (much faster)*
+
+Minimap2 mapping of reads (short and long):
+
+	minimap2 -t 12 \
+	-a assembly.fasta \
+	genus_species_R1.trim_pair.fastq.gz \
+	genus_species_R2.trim_pair.fastq.gz \
+	genus_species.trim_unpair.fastq.gz \
+	nanopore_basecalled.fastq.gz \
+	> genus_species.minimap2.sam
 
 
 ## Using Blobtools v2 on your data
@@ -96,23 +106,26 @@ To use, ssh into Soyouz with ports forwarded  (change user@server.ca):
 `ssh -L 8080:127.0.0.1:8080 -L 8000:127.0.0.1:8000 user@server.ca`
 
 Activate newly created Conda blobtoolkit environment:
-`conda activate btk_env`
-
+`conda activate btk_env` (Soyouz)
+`conda activate blobtoolkit` (Jezero)
 
 Create BlobDir:
 
-	~/progs/blobtoolkit/blobtools2/blobtools create \
+	blobtools create \
 	--fasta ~/path/to/assembly/assembly_transcripts.fasta \
 	--taxid 1911741 \
 	--taxdump ~/progs/blobtoolkit/taxdump \
 	~/path/to/blobdir/
 
-The taxid is from NCBI, add it if your organism has one. The last line is the path to where your BlobDir directory and all relevant data will be created (does not need to exist). This will create a couple of .json files in the BlobDir, and we will add to this in the next few commands.
+On Jezero taxdump is under /opt/blobtoolkit/taxdump
+
+
+The taxid is from NCBI, you can add it if your organism has one. The last line is the path to where your BlobDir directory and all relevant data will be created (does not need to exist). This will create a couple of .json files in the BlobDir, and we will add to this in the next few commands.
 
 
 Add taxonomic hits:
 
-	~/progs/blobtoolkit/blobtools2/blobtools add \
+	blobtools add \
 	--hits ~/path/to/assembly/transcripts_vs_nt.blastn \
 	--hits ~/path/to/assembly/transcripts_vs_uniprot_ref.mts1.1e25.taxified.out \
 	--taxrule bestsumorder \
@@ -122,21 +135,21 @@ Add taxonomic hits:
 
 Add coverage:
 
-	~/progs/blobtoolkit/blobtools2/blobtools add \
+	blobtools add \
 	--cov ~/path/to/assembly/SPO2_transcripts_mapped.sorted.bam \
 	~/path/to/blobdir/
 
 
 Add BUSCO hits:
 
-	~/progs/blobtoolkit/blobtools2/blobtools add \
+	blobtools add \
 	--busco ~/path/to/assembly/SAMPLE_BUSCO_full_table.tsv \
 	~/path/to/blobdir/
 
 
 Start viewer:
 
-	~/progs/blobtoolkit/blobtools2/blobtools host --port 8080 \
+	blobtools host --port 8080 \
 	--api-port 8000 \
 	--hostname localhost \
 	--viewer ~/progs/blobtoolkit/viewer \
