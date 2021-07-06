@@ -79,7 +79,19 @@ Taxify diamond results (this currently doesn't work in blobtoolsv2 – working o
 *TODO: Taxify UniProt database with NCBI taxdump: https://blobtoolkit.genomehubs.org/install/#databases*
 
 #### Step 3: Map trimmed reads to the assembly
-Mapping is used to assess the coverage of reads on contigs. You can do this either with bowtie2 or minimap2 (the latter is much faster, but less accurate? If you have Nanopore or PacBio reads you'll need to use minimap2).
+Mapping is used to assess the coverage of reads on contigs. You can do this either with minimap2 or bowtie2 (If you have Nanopore or PacBio reads you'll need to use minimap2).
+
+###### minimap2 mapping of reads (short and long):
+
+	minimap2 -t 12 \
+	-a assembly.fasta \
+	genus_species_R1.trim_pair.fastq.gz \
+	genus_species_R2.trim_pair.fastq.gz \
+	genus_species.trim_unpair.fastq.gz \
+	nanopore_basecalled.fastq.gz \
+	> genus_species.minimap2.sam
+
+###### ALTERNATIVE: bowtie2 mapping of short reads only
 
 Index the contigs for Bowtie2:
 
@@ -90,15 +102,6 @@ bowtie2 mapping of merged reads (slow, run on as many threads as possible with -
 	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
 
-Minimap2 mapping of reads (short and long):
-
-	minimap2 -t 12 \
-	-a assembly.fasta \
-	genus_species_R1.trim_pair.fastq.gz \
-	genus_species_R2.trim_pair.fastq.gz \
-	genus_species.trim_unpair.fastq.gz \
-	nanopore_basecalled.fastq.gz \
-	> genus_species.minimap2.sam
 
 
 ## Using Blobtools v2 on your data
