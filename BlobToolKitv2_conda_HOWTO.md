@@ -48,13 +48,13 @@ Run first, then blastx overnight. Megablast vs nt: Megablast is optimized for hi
 
 	blastn \
 	-task megablast \
-	-query Trinity.fasta \
-	-db /scratch/NCBI_NT/nt \
+	-query contigs.fasta \
+	-db /Data/databases/NT_blast/nt \
 	-outfmt '6 qseqid staxids bitscore std sscinames sskingdoms stitle' \
 	-culling_limit 5 \
 	-num_threads 12 \
 	-evalue 1e-25 \
-	-max_target_seqs 5 > Trinity_vs_nt.blastn
+	-max_target_seqs 5 > contigs_vs_nt.blastn
 
 #### Step 2: Run diamond blastx against uniprot reference proteomes
 uniprot db was converted for diamond by Filip, the taxids file was provided by Filip as well and can be found under `/scratch/uniprot/`.
@@ -62,21 +62,21 @@ Note that diamond blastx is VERY SLOW – run overnight with 24 threads.
 
 Diamond blastx:
 
-	/opt/bin/diamond blastx \
-	--query Trinity.fasta \
-	--db /scratch/uniprot/uniprot_ref_proteomes.diamond.dmnd \
+	diamond blastx \
+	--query contigs.fasta \
+	--db /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.dmnd \
 	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore \
 	--sensitive \
 	--max-target-seqs 1 \
 	--evalue 1e-25 \
 	--threads 8 \
-	--out Trinity.fasta.vs.uniprot_ref.mts1.1e25.out
+	--out contigs_vs_uniprot_ref.mts1.1e25.out
 
-Taxify diamond results (this currently doesn't work in blobtoolsv2 – working on it. In the meantime, taxify the uniprot-output with blobtoolsv1):
+###### If Uniprot results are not taxified (they are if running on Jezero):
+You'll have to use blobtoolsv1 to do this.
 
 	/opt/blobtools/blobtools taxify -f Trinity.fasta.vs.uniprot_ref.mts1.1e25.out -m /scratch/uniprot/uniprot_ref_proteomes.taxids -s 0 -t 2
 
-*TODO: Taxify UniProt database with NCBI taxdump: https://blobtoolkit.genomehubs.org/install/#databases*
 
 #### Step 3: Map trimmed reads to the assembly
 Mapping is used to assess the coverage of reads on contigs. You can do this either with minimap2 or bowtie2 (If you have Nanopore or PacBio reads you'll need to use minimap2).
@@ -117,11 +117,8 @@ Create BlobDir:
 	blobtools create \
 	--fasta ~/path/to/assembly/assembly_transcripts.fasta \
 	--taxid 1911741 \
-	--taxdump ~/progs/blobtoolkit/taxdump \
+	--taxdump /opt/blobtoolkit/taxdump/ \
 	~/path/to/blobdir/
-
-On Jezero taxdump is under /opt/blobtoolkit/taxdump
-
 
 The taxid is from NCBI, you can add it if your organism has one. The last line is the path to where your BlobDir directory and all relevant data will be created (does not need to exist). This will create a couple of .json files in the BlobDir, and we will add to this in the next few commands.
 
@@ -132,7 +129,7 @@ Add taxonomic hits:
 	--hits ~/path/to/assembly/transcripts_vs_nt.blastn \
 	--hits ~/path/to/assembly/transcripts_vs_uniprot_ref.mts1.1e25.taxified.out \
 	--taxrule bestsumorder \
-	--taxdump ~/progs/blobtoolkit/taxdump \
+	--taxdump /opt/blobtoolkit/taxdump/ \
 	~/path/to/blobdir/
 
 
@@ -155,7 +152,7 @@ Start viewer:
 	blobtools host --port 8080 \
 	--api-port 8000 \
 	--hostname localhost \
-	--viewer ~/progs/blobtoolkit/viewer \
+	--viewer /opt/blobtoolkit/viewer/ \
 	~/path/to/blobdir/
 
 
