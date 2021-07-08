@@ -81,7 +81,7 @@ You'll have to use blobtoolsv1 to do this.
 #### Step 3: Map trimmed reads to the assembly
 Mapping is used to assess the coverage of reads on contigs. You can do this either with minimap2 or bowtie2 (If you have Nanopore or PacBio reads you'll need to use minimap2).
 
-###### minimap2 mapping of reads (short and long):
+##### minimap2 mapping of reads (short and long):
 
 	minimap2 -t 12 \
 	-a assembly.fasta \
@@ -101,7 +101,10 @@ bowtie2 mapping of merged reads (slow, run on as many threads as possible with -
 
 	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
+##### Convert SAM to BAM and sort (applies to both minimap2 and bowtie2):
 
+	samtools view -@ 10 -bS -o genus_species.bam genus_species.sam
+	samtools sort -@ 10 -o genus_species.sorted.bam genus_species.bam
 
 
 ## Using Blobtools v2 on your data
