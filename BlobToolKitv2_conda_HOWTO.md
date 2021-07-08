@@ -3,43 +3,6 @@
 
 Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/
 
-## Installation
-###### Install Conda:
-`curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > Miniconda3.sh`
-
-Make the script executable:
-`chmod +x Miniconda3.sh`
-
-Logout, log back in.
-
-
-###### Install BlobToolKit:
-Create new conda environment and install BlobToolKit:
-
-	conda create -n btk_env -c conda-forge -y python=3.6 docopt psutil pyyaml ujson tqdm nodejs=10 yq
-	conda activate btk_env
-	conda install -c bioconda -y pysam seqtk
-	conda install -c conda-forge -y geckodriver selenium pyvirtualdisplay
-	pip install fastjsonschema
-
-	mkdir -p ~/progs/blobtoolkit
-	cd ~/progs/blobtoolkit
-	git clone https://github.com/blobtoolkit/blobtools2
-	git clone https://github.com/blobtoolkit/viewer
-	git clone https://github.com/blobtoolkit/specification
-	git clone https://github.com/blobtoolkit/insdc-pipeline
-
-	cd viewer
-	npm install
-	cd ..
-
-(there might be a few errors during `npm install` – it's probably fine)
-
-
-###### Fetch NCBI taxdump:
-	mkdir -p taxdump
-	cd taxdump
-	curl -L ftp://ftp.ncbi.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz | tar xzf -
 
 ## Prep your data
 #### Step 1: Run megablast against nt
@@ -161,3 +124,44 @@ Start viewer:
 
 Then on own computer, in Firefox, open (might take a while):
 `http://localhost:8080`
+
+
+
+## Installation
+###### Install Conda:
+`curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > Miniconda3.sh`
+
+Make the script executable:
+`chmod +x Miniconda3.sh`
+
+Logout, log back in.
+
+
+###### Install BlobToolKit:
+Create new conda environment and install BlobToolKit:
+
+	conda create -n btk_env -c conda-forge -y python=3.6 docopt psutil pyyaml ujson tqdm nodejs=10 yq
+	conda activate btk_env
+	conda install -c bioconda -y pysam seqtk
+	conda install -c conda-forge -y geckodriver selenium pyvirtualdisplay
+	pip install fastjsonschema
+
+	mkdir -p ~/progs/blobtoolkit
+	cd ~/progs/blobtoolkit
+	git clone https://github.com/blobtoolkit/blobtools2
+	git clone https://github.com/blobtoolkit/viewer
+	git clone https://github.com/blobtoolkit/specification
+	git clone https://github.com/blobtoolkit/insdc-pipeline
+
+	cd viewer
+	npm install
+	cd ..
+
+(there might be a few errors during `npm install` – it's probably fine)
+
+
+###### Fetch NCBI taxdump:
+	mkdir -p taxdump
+	cd taxdump
+	curl -L ftp://ftp.ncbi.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz | tar xzf -
+
