@@ -118,7 +118,7 @@ Activate newly created Conda blobtoolkit environment:
 Create BlobDir:
 
 	blobtools create \
-	--fasta ~/path/to/assembly/assembly_transcripts.fasta \
+	--fasta assembly.fasta \
 	--taxid 1911741 \
 	--taxdump /opt/blobtoolkit/taxdump/ \
 	~/path/to/blobdir/
@@ -129,8 +129,8 @@ The taxid is from NCBI, you can add it if your organism has one. The last line i
 Add taxonomic hits:
 
 	blobtools add \
-	--hits ~/path/to/assembly/transcripts_vs_nt.blastn \
-	--hits ~/path/to/assembly/transcripts_vs_uniprot_ref.mts1.1e25.taxified.out \
+	--hits transcripts_vs_nt.blastn \
+	--hits transcripts_vs_uniprot_ref.mts1.1e25.taxified.out \
 	--taxrule bestsumorder \
 	--taxdump /opt/blobtoolkit/taxdump/ \
 	~/path/to/blobdir/
@@ -139,14 +139,14 @@ Add taxonomic hits:
 Add coverage:
 
 	blobtools add \
-	--cov ~/path/to/assembly/SPO2_transcripts_mapped.sorted.bam \
+	--cov ~/path/to/assembly/genus_species.sorted.bam \
 	~/path/to/blobdir/
 
 
 Add BUSCO hits:
 
 	blobtools add \
-	--busco ~/path/to/assembly/SAMPLE_BUSCO_full_table.tsv \
+	--busco full_table_SAMPLE_BUSCO.tsv \
 	~/path/to/blobdir/
 
 
