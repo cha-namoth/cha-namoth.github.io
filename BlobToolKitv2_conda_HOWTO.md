@@ -165,3 +165,28 @@ Create new conda environment and install BlobToolKit:
 	cd taxdump
 	curl -L ftp://ftp.ncbi.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz | tar xzf -
 
+### Notes to incorporate
+Install instructions:
+
+	sudo apt update && sudo apt-get -y install firefox xvfb
+	conda create -n btk_env -c conda-forge -y python=3.6 docopt psutil pyyaml ujson tqdm nodejs=10 yq
+	conda activate btk_env
+	conda install -c bioconda -y pysam seqtk
+	conda install -c conda-forge -y geckodriver selenium pyvirtualdisplay
+	pip install fastjsonschema
+
+	sudo mkdir /opt/blobtools2
+	cd /opt/blobtools2;
+	sudo git clone https://github.com/blobtoolkit/blobtools2;
+	sudo git clone https://github.com/blobtoolkit/viewer;
+	sudo git clone https://github.com/blobtoolkit/specification;
+	sudo git clone https://github.com/blobtoolkit/insdc-pipeline;
+
+	cd viewer
+	sudo su -    #switch to root to get npm to work
+	/opt/Anaconda3/envs/btk_env/bin/npm install    #need full path to npm when in sudo
+
+	Testing:
+	ssh -L 8080:127.0.0.1:8080 -L 8000:127.0.0.1:8000 username@server.ca
+	conda activate btk_env
+	/opt/blobtools2/blobtools2/blobtools host --port 8080 --api-port 8000 --hostname localhost --viewer /opt/blobtools2/viewer test_BlobDir
