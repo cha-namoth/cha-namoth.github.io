@@ -125,6 +125,15 @@ Start viewer:
 Then on own computer, in Firefox, open (might take a while):
 `http://localhost:8080`
 
+If this fails (for example the command runs and goes back to the prompt), do:
+	conda deactivate
+	conda activate btk_env
+	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
+	--api-port 8000 \
+	--hostname localhost \
+	--viewer /opt/blobtoolkit/viewer/ \
+	~/path/to/blobdir/
+
 
 
 ## Installation
