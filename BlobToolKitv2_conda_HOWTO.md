@@ -37,7 +37,7 @@ Diamond blastx:
 
 ###### If Uniprot results are not taxified (they are if running on Jezero):
 You'll have to use blobtoolsv1 to do this.
-
+	conda activate blobtools_V1
 	/opt/blobtools/blobtools taxify -f Trinity.fasta.vs.uniprot_ref.mts1.1e25.out -m /scratch/uniprot/uniprot_ref_proteomes.taxids -s 0 -t 2
 
 
@@ -125,7 +125,7 @@ Start viewer:
 Then on own computer, in Firefox, open (might take a while):
 `http://localhost:8080`
 
-If this fails (for example the command runs and goes back to the prompt), do:
+If this fails on Jezero (for example the command runs and goes back to the prompt), do:
 	conda deactivate
 	conda activate btk_env
 	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
