@@ -125,7 +125,9 @@ Start viewer:
 Then on own computer, in Firefox, open (might take a while):
 `http://localhost:8080`
 
-If this fails on Jezero (for example the command runs and goes back to the prompt), do:
+
+If the command above fails on Jezero (for example the command runs and goes back to the prompt), do:
+
 	conda deactivate
 	conda activate btk_env
 	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
