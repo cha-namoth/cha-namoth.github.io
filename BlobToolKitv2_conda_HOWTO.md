@@ -35,10 +35,11 @@ Diamond blastx:
 	--threads 8 \
 	--out contigs_vs_uniprot_ref.mts1.1e25.out
 
-###### If Uniprot results are not taxified (they are if running on Jezero):
+###### If Uniprot results are not taxified (example for Jezero):
 You'll have to use blobtoolsv1 to do this.
+
 	conda activate blobtools_V1
-	/opt/blobtools/blobtools taxify -f Trinity.fasta.vs.uniprot_ref.mts1.1e25.out -m /scratch/uniprot/uniprot_ref_proteomes.taxids -s 0 -t 2
+	/opt/blobtools/blobtools taxify -f Trinity.fasta.vs.uniprot_ref.mts1.1e25.out -m /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.taxids -s 0 -t 2
 
 
 #### Step 3: Map trimmed reads to the assembly
