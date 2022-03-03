@@ -77,8 +77,8 @@ https://bioinformatics.uconn.edu/bacterial-genome-assembly-tutorial/
 --pe1-2 = fastq-file (paired end reads, R2)\
 --pe1-s = fastq-file (unpaired reads)\
 --nanopore = nanopore reads\
--t = number of threads to use for computation (16 is good)\
--m = amount of memory in GB (250 will be probably enough)\
+-t = number of threads to use\
+-m = amount of memory in GB (250 will be probably enough and is the default)\
 --sc = single-cell mode (accounts for uneven coverage from whole-genome amplification)
 
 The assembly might take a few hours to several days, depending on how many reads will be assembled. The final assembly will be `contigs.fasta` in your desired output folder.
