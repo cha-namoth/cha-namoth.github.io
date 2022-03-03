@@ -2,9 +2,6 @@
 
 ## General bits and bobs
 
-All the relevant data that you need is on `Jezero`, under `/Data/glax/sharebox/SelTer_subassemblies_July2021/` \
-There's a `raw_reads` folder with all the Illumina and Nanopore reads, and then one folder for Hepatoplasma, and one for Microsporidia. 
-
 You can run all the commands with `screen`, or with `nohup`.
 
 ##### screen
