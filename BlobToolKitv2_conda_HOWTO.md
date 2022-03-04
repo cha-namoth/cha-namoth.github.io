@@ -98,7 +98,7 @@ Add coverage:
 	~/path/to/blobdir/
 
 
-Add BUSCO hits:
+Add BUSCO hits (optional):
 
 	blobtools add \
 	--busco full_table_SAMPLE_BUSCO.tsv \
@@ -115,15 +115,15 @@ Start viewer:
 	--viewer /opt/blobtoolkit/viewer/ \
 	~/path/to/blobdir/
 
-Then on own computer, in Firefox or Chrome, open (might take a while) `http://localhost:8080`
+Then on own computer, in Firefox or Chrome, open `http://localhost:8080` (might take a while)
 
 
 ## Installation
-###### Install Conda:
+###### Install Miniconda (if not already installed):
 `curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > Miniconda3.sh`
 
-Make the script executable:
-`chmod +x Miniconda3.sh`
+Make the script executable: `chmod +x Miniconda3.sh`
+Execute script: `./Miniconda3.sh`
 
 Logout, log back in.
 
@@ -161,11 +161,11 @@ Create new conda environment and install BlobToolKit:
 
 Index the contigs for Bowtie2:
 
-		bowtie2-build assembly.fasta assembly.fasta
+	bowtie2-build assembly.fasta assembly.fasta
 
 bowtie2 mapping of merged reads (slow, run on as many threads as possible with -p):
 
-		bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
+	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
 
 ### Notes to incorporate
