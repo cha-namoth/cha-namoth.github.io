@@ -43,7 +43,7 @@ You'll have to use blobtoolsv1 to do this.
 
 
 #### Step 3: Map trimmed reads to the assembly
-Mapping is used to assess the coverage of reads on contigs. You can do this either with minimap2 or bowtie2 (If you have Nanopore or PacBio reads you'll need to use minimap2).
+Mapping is used to assess the coverage of reads on contigs. You can do this either with minimap2 or bowtie2 (If you have Nanopore or PacBio reads you'll need to use minimap2). Bowtie2 instructions are at the very bottom.
 
 ##### minimap2 mapping of reads (short and long):
 
@@ -55,15 +55,6 @@ Mapping is used to assess the coverage of reads on contigs. You can do this eith
 	nanopore_basecalled.fastq.gz \
 	> genus_species.minimap2.sam
 
-###### ALTERNATIVE: bowtie2 mapping of short reads only
-
-Index the contigs for Bowtie2:
-
-	bowtie2-build assembly.fasta assembly.fasta
-
-bowtie2 mapping of merged reads (slow, run on as many threads as possible with -p):
-
-	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
 ##### Convert SAM to BAM and sort (applies to both minimap2 and bowtie2):
 
@@ -116,19 +107,6 @@ Add BUSCO hits:
 
 Start viewer:
 
-	blobtools host --port 8080 \
-	--api-port 8000 \
-	--hostname localhost \
-	--viewer /opt/blobtoolkit/viewer/ \
-	~/path/to/blobdir/
-
-
-Then on own computer, in Firefox, open (might take a while):
-`http://localhost:8080`
-
-
-If the command above fails on Jezero (for example the command runs and goes back to the prompt), do:
-
 	conda deactivate
 	conda activate btk_env
 	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
@@ -137,6 +115,7 @@ If the command above fails on Jezero (for example the command runs and goes back
 	--viewer /opt/blobtoolkit/viewer/ \
 	~/path/to/blobdir/
 
+Then on own computer, in Firefox or Chrome, open (might take a while) `http://localhost:8080`
 
 
 ## Installation
@@ -176,6 +155,18 @@ Create new conda environment and install BlobToolKit:
 	mkdir -p taxdump
 	cd taxdump
 	curl -L ftp://ftp.ncbi.nih.gov/pub/taxonomy/new_taxdump/new_taxdump.tar.gz | tar xzf -
+
+
+### ALTERNATIVE: map short reads only with bowtie2
+
+Index the contigs for Bowtie2:
+
+		bowtie2-build assembly.fasta assembly.fasta
+
+bowtie2 mapping of merged reads (slow, run on as many threads as possible with -p):
+
+		bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
+
 
 ### Notes to incorporate
 Install instructions:
