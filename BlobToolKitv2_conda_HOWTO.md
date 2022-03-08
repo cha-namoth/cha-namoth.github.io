@@ -27,13 +27,14 @@ Diamond blastx:
 
 	diamond blastx \
 	--query contigs.fasta \
-	--db /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.dmnd \
-	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore \
-	--sensitive \
 	--max-target-seqs 1 \
+	--sensitive \
+	--threads 12 -M 60 \
+	--db /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.dmnd \
 	--evalue 1e-25 \
-	--threads 8 \
+	--outfmt 6 \
 	--out contigs_vs_uniprot_ref.mts1.1e25.out
+
 
 ###### If Uniprot results are not taxified (example for Jezero):
 You'll have to use blobtoolsv1 to do this.
