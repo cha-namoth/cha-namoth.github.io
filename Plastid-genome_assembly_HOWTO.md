@@ -112,7 +112,7 @@ Once the assembly has finished, we can evaluate it to give us a better idea of, 
     conda deactivate
 
 The report files in the output folder have all the relevant results. For example, maybe we can see that the largest contig is >100.000bp – that might well be a part of the plastid genome. Likely we'll have some larger contigs, and tons of smaller ones.
-´
+
 
 ##### Genome completeness: BUSCO
 
@@ -121,9 +121,6 @@ The report files in the output folder have all the relevant results. For example
     conda deactivate
 
 This is another tool we often use to see how 'complete' a genome or transcriptome is. BUSCO looks for core conserved genes, and uses that presence/absence as a proxy to how complete the genome is (the more BUSCOs recovered, the more complete). This is somewhat of an imperfect proxy, since many genes are just not that conserved across all eukaryotes, so BUSCO has several lineage-specific datasets to choose from (the list also the number of genes): https://busco.ezlab.org/list_of_lineages.html
-
-Here we'll run `eukaryota_odb10` and `chlorophyta_odb10` (run separately).
-
 
 
 
@@ -137,11 +134,15 @@ I also wrote something on how to actually use blobtoolkit: https://github.com/ch
 You can start with 'Prep your data' in the guide linked above, since everything else is already installed.
 At Step 3, use only the minimap2-approach, since we both have long and short read data, and bowtie2 can't handle long reads.
 
-At the very last step, be sure to use Firefox when accessing http://localhost:8080, nothing else will work properly.
+At the very last step, be sure to use Firefox or Chrome when accessing http://localhost:8080, nothing else will work properly.
 
 
 ## Plastid genome assembly with NOVOplasty
 
+Make config-file:
+Provide rough expected length, seed-sequence (plastid sequence identified from BlobToolKit above), potentially a reference sequence, provide path to adapter-trimmed fastq-files (they NEED to be unzipped)
+
+`perl /opt/NOVOPlasty-master/NOVOPlasty4.3.1.pl -c config.txt`
 
 
 
