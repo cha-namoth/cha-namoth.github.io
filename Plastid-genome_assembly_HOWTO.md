@@ -179,10 +179,6 @@ The Docker container is still running – stop and remove it, but first show the
     docker rm [container-ID/name]
 
 ### Converting MFannot output
-Convert `.new` to GFF (can import into Geneious):
+Convert `.new` to GFF (can import into Geneious): `agat_convert_mfannot2gff.pl -m [mfannot.new] -o [mfannot.gff]`
 
-    agat_convert_mfannot2gff.pl -m [mfannot.new] -o [mfannot.gff]
-
-Convert `.sqn` to flat-file GenBank (can import into Geneious):
-
-    asn2gb -i [mfannot.sqn] -o [mfannot.gb]
+Convert `.sqn` to flat-file GenBank (can import into Geneious): `asn2gb -i [mfannot.sqn] -o [mfannot.gb]`
