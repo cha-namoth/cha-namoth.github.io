@@ -138,3 +138,53 @@ You can start with 'Prep your data' in the guide linked above, since everything 
 At Step 3, use only the minimap2-approach, since we both have long and short read data, and bowtie2 can't handle long reads.
 
 At the very last step, be sure to use Firefox when accessing http://localhost:8080, nothing else will work properly.
+
+
+## Plastid genome assembly with NOVOplasty
+
+
+
+
+## Plastid genome annotation with MFannot
+
+There are several automatic plastid genome annotators out there, including GeSeq: https://chlorobox.mpimp-golm.mpg.de/geseq.html
+MFannot seems to perform reasonably well with extreme genomes like those from apicomplexans, and they even have a web interface if that is easier: https://megasun.bch.umontreal.ca/cgi-bin/mfannot/mfannotInterface.pl
+
+To run MFannot on Jezero, we need to first setup Docker and start a Docker-container for MFannot. For this, regular users (ie. non-sudo) need to run this rootless setup first:
+
+`/usr/bin/dockerd-rootless-setuptool.sh install`
+
+Then start the docker-service:
+
+`systemctl --user start docker`
+
+
+Go to your directory where you want to run MFannot from:
+
+  cd /path/to/directory/with/files
+  docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) nbeck/mfannot
+
+This brings you to a new prompt (starts with `root`). You are now in the Docker container, and you only have access to the files in that particular directory you started the Docker command from (see above). Run this to annotate your fasta:
+
+  mfannot --sqn --tbl input.fasta
+
+`--sqn` = produce a `.sqn` file (can be converted to a flat GenBank file)\
+`--tbl` = produce a `.tbl` file (table, easy to read)\
+default is a `.new` file, which can be converted to GFF (see below)
+
+Type `exit` to quit the Docker container.
+
+The Docker container is still running – stop and remove it, but first show the ID and names for active containers:
+
+  docker ps -a
+  docker stop [container-ID/name]
+  docker rm [container-ID/name]
+
+### Converting MFannot output
+Convert `.new` to GFF (can import into Geneious):
+
+  agat_convert_mfannot2gff.pl -m [mfannot.new] -o [mfannot.gff]
+
+Convert `.sqn` to flat-file GenBank (can import into Geneious):
+
+  asn2gb -i [mfannot.sqn] -o [mfannot.gb]
