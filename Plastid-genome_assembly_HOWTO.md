@@ -154,19 +154,17 @@ To run MFannot on Jezero, we need to first setup Docker and start a Docker-conta
 
 `/usr/bin/dockerd-rootless-setuptool.sh install`
 
-Then start the docker-service:
-
-`systemctl --user start docker`
+Then start the docker-service: `systemctl --user start docker`
 
 
 Go to your directory where you want to run MFannot from:
 
-  cd /path/to/directory/with/files
-  docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) nbeck/mfannot
+    cd /path/to/directory/with/files
+    docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) nbeck/mfannot
 
 This brings you to a new prompt (starts with `root`). You are now in the Docker container, and you only have access to the files in that particular directory you started the Docker command from (see above). Run this to annotate your fasta:
 
-  mfannot --sqn --tbl input.fasta
+    mfannot --sqn --tbl input.fasta
 
 `--sqn` = produce a `.sqn` file (can be converted to a flat GenBank file)\
 `--tbl` = produce a `.tbl` file (table, easy to read)\
@@ -176,15 +174,15 @@ Type `exit` to quit the Docker container.
 
 The Docker container is still running – stop and remove it, but first show the ID and names for active containers:
 
-  docker ps -a
-  docker stop [container-ID/name]
-  docker rm [container-ID/name]
+    docker ps -a
+    docker stop [container-ID/name]
+    docker rm [container-ID/name]
 
 ### Converting MFannot output
 Convert `.new` to GFF (can import into Geneious):
 
-  agat_convert_mfannot2gff.pl -m [mfannot.new] -o [mfannot.gff]
+    agat_convert_mfannot2gff.pl -m [mfannot.new] -o [mfannot.gff]
 
 Convert `.sqn` to flat-file GenBank (can import into Geneious):
 
-  asn2gb -i [mfannot.sqn] -o [mfannot.gb]
+    asn2gb -i [mfannot.sqn] -o [mfannot.gb]
