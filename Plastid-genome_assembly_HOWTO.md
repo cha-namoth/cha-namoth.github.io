@@ -161,9 +161,9 @@ Then start the docker-service: `systemctl --user start docker`
 Go to your directory where you want to run MFannot from:
 
     cd /path/to/directory/with/files
-    docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) --user $UID:$UID nbeck/mfannot
+    docker run -it --rm --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) --user $UID:$GID -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro nbeck/mfannot
 
-This brings you to a new prompt (starts with `root`). You are now in the Docker container, and you only have access to the files in that particular directory you started the Docker command from (see above). Run this to annotate your fasta:
+This brings you to a new prompt. You are now in the Docker container, and you only have access to the files in that particular directory you started the Docker command from (see above). Run this to annotate your fasta:
 
     mfannot --sqn --tbl input.fasta
 
@@ -173,7 +173,7 @@ default is a `.new` file, which can be converted to GFF (see below)
 
 Type `exit` to quit the Docker container.
 
-The Docker container is still running – stop and remove it, but first show the ID and names for active containers:
+The following commands are just some Docker container commands – listing the IDs and names for active containers, and stopping and removing a container:
 
     docker ps -a
     docker stop [container-ID/name]
