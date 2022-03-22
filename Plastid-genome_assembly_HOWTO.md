@@ -161,7 +161,7 @@ Then start the docker-service: `systemctl --user start docker`
 Go to your directory where you want to run MFannot from:
 
     cd /path/to/directory/with/files
-    docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) nbeck/mfannot
+    docker run -it --mount type=bind,src=$(pwd),dst=$(pwd) -w $(pwd) --user $UID:$UID nbeck/mfannot
 
 This brings you to a new prompt (starts with `root`). You are now in the Docker container, and you only have access to the files in that particular directory you started the Docker command from (see above). Run this to annotate your fasta:
 
