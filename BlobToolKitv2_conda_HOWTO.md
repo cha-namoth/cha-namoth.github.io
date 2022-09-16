@@ -5,6 +5,11 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 
 
 ## Prep your data
+
+**As of September 2022 this is broken:**
+1) The blast formats need to be updated (see https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/adding-data-to-a-dataset/adding-hits/#hits), basically the number of columns expected from blobtoolkit differs from the columns provided
+2) There's something wrong with the host command. Not sure what.
+
 #### Step 1: Run megablast against nt
 
 Run first, then blastx overnight. Megablast vs nt: Megablast is optimized for highly similar sequences
