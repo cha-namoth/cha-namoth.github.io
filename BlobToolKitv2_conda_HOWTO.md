@@ -10,6 +10,7 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 1) The blast formats need to be updated (see https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/adding-data-to-a-dataset/adding-hits/#hits), basically the number of columns expected from blobtoolkit differs from the columns provided
 2) There's something wrong with the host command. Not sure what.
 3) You can try running a local installation on your computer, as far as I can tell this is only an option on OS X/Linux machines (https://github.com/blobtoolkit/blobtoolkit)
+4) What semi-works is the installation via `pip install blobtoolkit` on Jezero, at least until the last step (`blobtools host --port 8080 --api-port 8000 --hostname localhost ~/blobdir/`)
 
 #### Step 1: Run megablast against nt
 
