@@ -13,7 +13,7 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 	10 silly lifecycle blobtoolkit-viewer@2.6.1~api: Args: [ '-c', 'node src/server/app.js' ] \
 	11 silly lifecycle blobtoolkit-viewer@2.6.1~api: Returned: code: 1  signal: null \
 	12 info lifecycle blobtoolkit-viewer@2.6.1~api: Failed to exec api script \
-	13 verbose stack Error: blobtoolkit-viewer@2.6.1 api: ``node src/server/app.js``
+	13 verbose stack Error: blobtoolkit-viewer@2.6.1 api: `node src/server/app.js`
 `
 
 3) You can try running a local installation on your computer, as far as I can tell this is only an option on OS X/Linux machines (https://github.com/blobtoolkit/blobtoolkit)
