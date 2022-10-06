@@ -9,11 +9,12 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 **As of September 2022 this is broken:**
 1) The blast formats need to be updated (see https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/adding-data-to-a-dataset/adding-hits/#hits), basically the number of columns expected from blobtoolkit differs from the columns provided [IN PROGRESS – ALMOST FIXED]
 2) There's something wrong with the host command. Not sure what, other than something is wrong with npm (from debug log):
-
+`
 	10 silly lifecycle blobtoolkit-viewer@2.6.1~api: Args: [ '-c', 'node src/server/app.js' ]
 	11 silly lifecycle blobtoolkit-viewer@2.6.1~api: Returned: code: 1  signal: null
 	12 info lifecycle blobtoolkit-viewer@2.6.1~api: Failed to exec api script
 	13 verbose stack Error: blobtoolkit-viewer@2.6.1 api: `node src/server/app.js`
+`
 
 3) You can try running a local installation on your computer, as far as I can tell this is only an option on OS X/Linux machines (https://github.com/blobtoolkit/blobtoolkit)
 4) What semi-works is the installation via `pip install blobtoolkit` on Jezero, at least until the last step (`blobtools host --port 8080 --api-port 8000 --hostname localhost ~/blobdir/`). When opening Firefox it says: `Unable to connect to API at http://localhost:8000/api/v1`. Not sure if this is a firewall or blobtools issue.
