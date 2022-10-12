@@ -8,6 +8,7 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 
 **As of September 2022 this is broken:**
 1) The blast formats need to be updated (see https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/adding-data-to-a-dataset/adding-hits/#hits), basically the number of columns expected from blobtoolkit differs from the columns provided **[FIXED – NEED TO UPDATE BELOW]**
+
 2) There's something wrong with the host command. Not sure what, other than something is wrong with npm (from debug log):
 `
 	10 silly lifecycle blobtoolkit-viewer@2.6.1~api: Args: [ '-c', 'node src/server/app.js' ] \
@@ -28,7 +29,7 @@ Run first, then blastx overnight. Megablast vs nt: Megablast is optimized for hi
 	-task megablast \
 	-query contigs.fasta \
 	-db /Data/databases/NT_blast/nt \
-	-outfmt '6 qseqid staxids bitscore std sscinames sskingdoms stitle' \
+	-outfmt '6 qseqid staxids bitscore std' \
 	-culling_limit 5 \
 	-num_threads 12 \
 	-evalue 1e-25 \
@@ -46,15 +47,9 @@ Diamond blastx:
 	--threads 12 -M 60 \
 	--db /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.dmnd \
 	--evalue 1e-25 \
-	--outfmt 6 \
+	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscor \
 	--out contigs_vs_uniprot_ref.mts1.1e25.out
 
-
-###### If Uniprot results are not taxified (example for Jezero):
-You'll have to use blobtoolsv1 to do this.
-
-	conda activate blobtools_V1
-	/opt/blobtools/blobtools taxify -f contigs_vs_uniprot_ref.mts1.1e25.out -m /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.taxids -s 0 -t 2
 
 
 #### Step 3: Map trimmed reads to the assembly
@@ -81,9 +76,9 @@ Mapping is used to assess the coverage of reads on contigs. You can do this eith
 To use, ssh into Soyouz with ports forwarded  (change user@server.ca):
 `ssh -L 8080:127.0.0.1:8080 -L 8000:127.0.0.1:8000 user@server.ca`
 
-Activate newly created Conda blobtoolkit environment:
-`conda activate btk_env` (Soyouz)
+Activate conda blobtoolkit environment:
 `conda activate blobtoolkit` (Jezero)
+`conda activate btk_env` (Soyouz)
 
 Create BlobDir:
 
@@ -181,6 +176,13 @@ Index the contigs for Bowtie2:
 bowtie2 mapping of merged reads (slow, run on as many threads as possible with -p):
 
 	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
+
+
+###### If Uniprot results are not taxified (OLD – YOU DO NOT USUALLY NEED TO DO THIS):
+You'll have to use blobtoolsv1 to do this.
+
+	conda activate blobtools_V1
+	/opt/blobtools/blobtools taxify -f contigs_vs_uniprot_ref.mts1.1e25.out -m /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.taxids -s 0 -t 2
 
 
 ### Notes to incorporate
