@@ -6,19 +6,15 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 
 ## Prep your data
 
-**As of September 2022 this is broken:**
-1) The blast formats need to be updated (see https://blobtoolkit.genomehubs.org/blobtools2/blobtools2-tutorials/adding-data-to-a-dataset/adding-hits/#hits), basically the number of columns expected from blobtoolkit differs from the columns provided **[FIXED – NEED TO UPDATE BELOW]**
+**As of October 2022 some things have changed:**
+1) The blastn and diamondblast commands are reformatted, and there's a new uniprot database version, which removes the previously required 'taxify' step.
 
-2) There's something wrong with the host command. Not sure what, other than something is wrong with npm (from debug log):
-`
-	10 silly lifecycle blobtoolkit-viewer@2.6.1~api: Args: [ '-c', 'node src/server/app.js' ] \
-	11 silly lifecycle blobtoolkit-viewer@2.6.1~api: Returned: code: 1  signal: null \
-	12 info lifecycle blobtoolkit-viewer@2.6.1~api: Failed to exec api script \
-	13 verbose stack Error: blobtoolkit-viewer@2.6.1 api: `node src/server/app.js`
-`
+2) The final host/viewing command changed. You NEED to make sure that you are NOT in ANY conda environment prior to running it – run `conda deactivate` twice, and make sure there is no `(base)` in front of your prompt.
 
-3) You can try running a local installation on your computer, as far as I can tell this is only an option on OS X/Linux machines (https://github.com/blobtoolkit/blobtoolkit)
-What semi-works is the installation via `pip install blobtoolkit` on Jezero, at least until the last step (`blobtools host --port 8080 --api-port 8000 --hostname localhost ~/blobdir/`). When opening Firefox it says: `Unable to connect to API at http://localhost:8000/api/v1`. Not sure if this is a firewall or blobtools issue.
+3) If you have a Mac or Unix machine, you can still always run a local blobtoolkit installation on your computer if the final viewing step fails: https://github.com/blobtoolkit/blobtoolkit
+After install, download your blobdirs and host them via:
+
+	blobtools view --local path/to/blobdir
 
 
 #### Step 1: Run megablast against nt
@@ -45,7 +41,7 @@ Diamond blastx:
 	--max-target-seqs 1 \
 	--sensitive \
 	--threads 12 -M 60 \
-	--db /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.dmnd \
+	--db /Data/databases/uniprot_ref_diamond_2022/reference_proteomes.dmnd \
 	--evalue 1e-25 \
 	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscor \
 	--out contigs_vs_uniprot_ref.mts1.1e25.out
@@ -115,14 +111,13 @@ Add BUSCO hits (optional):
 	~/path/to/blobdir/
 
 
-Start viewer:
+Start viewer **(THIS IS NEW, FOR JEZERO ONLY)**:
 
 	conda deactivate
-	conda activate btk_env
-	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
+	conda deactivate
+	blobtools host --port 8080 \
 	--api-port 8000 \
 	--hostname localhost \
-	--viewer /opt/blobtoolkit/viewer/ \
 	~/path/to/blobdir/
 
 Then on own computer, in Firefox or Chrome, open `http://localhost:8080` (might take a while)
@@ -178,11 +173,23 @@ bowtie2 mapping of merged reads (slow, run on as many threads as possible with -
 	bowtie2 -x assembly.fasta -U ../genus_species.paired.trim.fastq -S genus_species.sam -p 10
 
 
-###### If Uniprot results are not taxified (OLD – YOU DO NOT USUALLY NEED TO DO THIS):
+### If Uniprot results are not taxified (OLD – YOU DO NOT USUALLY NEED TO DO THIS):
 You'll have to use blobtoolsv1 to do this.
 
 	conda activate blobtools_V1
 	/opt/blobtools/blobtools taxify -f contigs_vs_uniprot_ref.mts1.1e25.out -m /Data/databases/uniprot_ref_diamond/uniprot_ref_proteomes.taxids -s 0 -t 2
+
+### OLD instructions for starting viewer
+
+	conda deactivate
+	conda activate btk_env
+	/opt/blobtools2/blobtools2/blobtools host --port 8080 \
+	--api-port 8000 \
+	--hostname localhost \
+	--viewer /opt/blobtoolkit/viewer/ \
+	~/path/to/blobdir/
+
+Then on own computer, in Firefox or Chrome, open `http://localhost:8080` (might take a while)
 
 
 ### Notes to incorporate
