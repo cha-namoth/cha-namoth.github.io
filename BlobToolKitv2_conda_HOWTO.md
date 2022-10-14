@@ -43,7 +43,7 @@ Diamond blastx:
 	--threads 12 -M 60 \
 	--db /Data/databases/uniprot_ref_diamond_2022/reference_proteomes.dmnd \
 	--evalue 1e-25 \
-	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscor \
+	--outfmt 6 qseqid staxids bitscore qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore \
 	--out contigs_vs_uniprot_ref.mts1.1e25.out
 
 
