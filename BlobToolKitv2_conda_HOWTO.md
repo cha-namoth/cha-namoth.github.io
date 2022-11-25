@@ -9,7 +9,7 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 **As of November 2022 some things have changed:**
 1) The blastn and diamondblast commands are reformatted, and there's a new uniprot database version, which removes the previously required 'taxify' step.
 
-2) There is no need for conda anymore. Follow the steps below with ´pipenv´.
+2) There is no need for conda anymore. Follow the steps below with `pipenv`.
 
 3) If you have a Mac or Unix machine, you can still always run a local blobtoolkit installation on your computer if the final viewing step fails: https://github.com/blobtoolkit/blobtoolkit
 After install, download your blobdirs and host them via:
