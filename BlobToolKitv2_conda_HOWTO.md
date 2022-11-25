@@ -12,9 +12,7 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 2) There is no need for conda anymore. Follow the steps below with `pipenv`.
 
 3) If you have a Mac or Unix machine, you can still always run a local blobtoolkit installation on your computer if the final viewing step fails: https://github.com/blobtoolkit/blobtoolkit
-After install, download your blobdirs and host them via:
-
-	blobtools view --local path/to/blobdir
+After install, download your blobdirs and host them via: `blobtools view --local path/to/blobdir`
 
 
 #### Step 1: Run megablast against nt
