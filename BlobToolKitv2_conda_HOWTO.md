@@ -6,10 +6,10 @@ Also see tutorials here: https://blobtoolkit.genomehubs.org/blobtools2/blobtools
 
 ## Prep your data
 
-**As of October 2022 some things have changed:**
+**As of November 2022 some things have changed:**
 1) The blastn and diamondblast commands are reformatted, and there's a new uniprot database version, which removes the previously required 'taxify' step.
 
-2) The final host/viewing command changed. You NEED to make sure that you are NOT in ANY conda environment prior to running it – run `conda deactivate` twice, and make sure there is no `(base)` in front of your prompt.
+2) There is no need for conda anymore. Follow the steps below with ´pipenv´.
 
 3) If you have a Mac or Unix machine, you can still always run a local blobtoolkit installation on your computer if the final viewing step fails: https://github.com/blobtoolkit/blobtoolkit
 After install, download your blobdirs and host them via:
@@ -68,20 +68,29 @@ Mapping is used to assess the coverage of reads on contigs. You can do this eith
 	samtools sort -@ 10 -o genus_species.sorted.bam genus_species.bam
 
 
+## Installing blobtoolkit locally
+
+Install the most recent version of blobtoolkit locally (i.e. only for yourself), in a virtual pip environment. The installation step will take a few minutes:
+
+	conda deactivate
+	pipenv install blobtoolkit
+	pipenv shell
+
+The last command will enter the virtual environment. From here, proceed with the commands below as per usual.
+
+
+
 ## Using Blobtools v2 on your data
-To use, ssh into Soyouz with ports forwarded  (change user@server.ca):
+To use, ssh into Jezero with ports forwarded  (change user@server.ca):
 `ssh -L 8080:127.0.0.1:8080 -L 8000:127.0.0.1:8000 user@server.ca`
 
-Activate conda blobtoolkit environment:
-`conda activate blobtoolkit` (Jezero)
-`conda activate btk_env` (Soyouz)
 
 Create BlobDir:
 
 	blobtools create \
 	--fasta assembly.fasta \
 	--taxid 1911741 \
-	--taxdump /opt/blobtoolkit/taxdump/ \
+	--taxdump /opt/blobtoolkit/taxdump_new/ \
 	~/path/to/blobdir/
 
 The taxid is from NCBI, you can add it if your organism has one. The last line is the path to where your BlobDir directory and all relevant data will be created (does not need to exist). This will create a couple of .json files in the BlobDir, and we will add to this in the next few commands.
@@ -91,9 +100,9 @@ Add taxonomic hits:
 
 	blobtools add \
 	--hits transcripts_vs_nt.blastn \
-	--hits transcripts_vs_uniprot_ref.mts1.1e25.taxified.out \
+	--hits transcripts_vs_uniprot_ref.mts1.1e25.out \
 	--taxrule bestsumorder \
-	--taxdump /opt/blobtoolkit/taxdump/ \
+	--taxdump /opt/blobtoolkit/taxdump_new/ \
 	~/path/to/blobdir/
 
 
@@ -111,10 +120,8 @@ Add BUSCO hits (optional):
 	~/path/to/blobdir/
 
 
-Start viewer **(THIS IS NEW, FOR JEZERO ONLY)**:
+Start viewer:
 
-	conda deactivate
-	conda deactivate
 	blobtools host --port 8080 \
 	--api-port 8000 \
 	--hostname localhost \
@@ -123,7 +130,7 @@ Start viewer **(THIS IS NEW, FOR JEZERO ONLY)**:
 Then on own computer, in Firefox or Chrome, open `http://localhost:8080` (might take a while)
 
 
-## Installation
+## Installation (OLD, DEPRECATED)
 ###### Install Miniconda (if not already installed):
 `curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > Miniconda3.sh`
 
