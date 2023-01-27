@@ -107,7 +107,7 @@ Once the assembly has finished, we can evaluate it to give us a better idea of, 
 
 ##### General assembly metrics: QUAST
 
-    conda activate QUAST
+    conda activate quast
     quast -t 2 -o [OUTPUT_QUAST] contigs.fasta
     conda deactivate
 
