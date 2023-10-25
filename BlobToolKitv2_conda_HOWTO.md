@@ -71,7 +71,8 @@ Mapping is used to assess the coverage of reads on contigs. You can do this eith
 Install the most recent version of blobtoolkit locally (i.e. only for yourself), in a virtual pip environment. The installation step will take a few minutes:
 
 	conda deactivate
-	pipenv install blobtoolkit
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	pipenv install blobtoolkit==4.1.5 numpy==1.24.4 pandas==2.0.3 scipy=1.10.1
 	pipenv shell
 
 The last command will enter the virtual environment. From here, proceed with the commands below as per usual.
