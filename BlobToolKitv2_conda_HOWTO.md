@@ -129,6 +129,20 @@ Start viewer:
 Then on own computer, in Firefox or Chrome, open `http://localhost:8080` (might take a while)
 
 
+### ALTERNATIVE way to start viewer if above gives you an 'can't access API' error
+
+	conda deactivate
+	conda deactivate
+	conda activate blobtoolkit-pip
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools view --remote path_to_your_blobtools_directory
+
+It will say for remote access use: `ssh -L 8003:127.0.0.1:8003 -L 8002:127.0.0.1:8002 username@remote_host`, this can be different every time so copy what it says when you run it.
+It will also say view dataset at ... and provide a link, copy that link and open in Chrome or Firefox.
+Open a new terminal and log in using the proxy prompt from the previous terminal (make sure to change username@remote_host).
+Once the new terminal is logged in with the appropriate proxy the viewer in browser should work.
+
+
+
 ## Installation (OLD, DEPRECATED)
 ###### Install Miniconda (if not already installed):
 `curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > Miniconda3.sh`
