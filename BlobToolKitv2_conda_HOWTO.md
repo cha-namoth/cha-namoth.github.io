@@ -66,27 +66,20 @@ Mapping is used to assess the coverage of reads on contigs. You can do this eith
 	samtools sort -@ 10 -o genus_species.sorted.bam genus_species.bam
 
 
-## Installing blobtoolkit locally
-
-Install the most recent version of blobtoolkit locally (i.e. only for yourself), in a virtual pip environment. The installation step will take a few minutes:
-
-	conda deactivate
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	pipenv install blobtoolkit==4.1.5 numpy==1.24.4 pandas==2.0.3 scipy=1.10.1
-	pipenv shell
-
-The last command will enter the virtual environment. From here, proceed with the commands below as per usual.
-
-
 
 ## Using Blobtools v2 on your data
 To use, ssh into Jezero with ports forwarded  (change user@server.ca):
 `ssh -L 8080:127.0.0.1:8080 -L 8000:127.0.0.1:8000 user@server.ca`
 
 
+### Activate conda blobtoolkit environment
+
+	conda activate blobtoolkit-pip
+
+
 Create BlobDir:
 
-	blobtools create \
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools create \
 	--fasta assembly.fasta \
 	--taxid 1911741 \
 	--taxdump /opt/blobtoolkit/taxdump_new/ \
@@ -97,7 +90,7 @@ The taxid is from NCBI, you can add it if your organism has one. The last line i
 
 Add taxonomic hits:
 
-	blobtools add \
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools add \
 	--hits transcripts_vs_nt.blastn \
 	--hits transcripts_vs_uniprot_ref.mts1.1e25.out \
 	--taxrule bestsumorder \
@@ -107,21 +100,21 @@ Add taxonomic hits:
 
 Add coverage:
 
-	blobtools add \
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools add \
 	--cov ~/path/to/assembly/genus_species.sorted.bam \
 	~/path/to/blobdir/
 
 
 Add BUSCO hits (optional):
 
-	blobtools add \
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools add \
 	--busco full_table_SAMPLE_BUSCO.tsv \
 	~/path/to/blobdir/
 
 
 Start viewer:
 
-	blobtools host --port 8080 \
+	/opt/Anaconda3/envs/blobtoolkit-pip/bin/blobtools host --port 8080 \
 	--api-port 8000 \
 	--hostname localhost \
 	~/path/to/blobdir/
@@ -141,6 +134,17 @@ It will also say view dataset at ... and provide a link, copy that link and open
 Open a new terminal and log in using the proxy prompt from the previous terminal (make sure to change username@remote_host).
 Once the new terminal is logged in with the appropriate proxy the viewer in browser should work.
 
+
+## Installing blobtoolkit locally (OLD, DEPRECATED AS OF OCT 2023)
+
+Install the most recent version of blobtoolkit locally (i.e. only for yourself), in a virtual pip environment. The installation step will take a few minutes:
+
+	conda deactivate
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	pipenv install blobtoolkit==4.1.5 numpy==1.24.4 pandas==2.0.3 scipy=1.10.1
+	pipenv shell
+
+The last command will enter the virtual environment. From here, proceed with the commands below as per usual.
 
 
 ## Installation (OLD, DEPRECATED)
